@@ -107,4 +107,3 @@ print(" \-------------- %s seconds ------------------\ " % round((time.time() - 
 # n = 100 E[T] = 888 ~ 2 seconds
 # n = 10.000 E[T] = 876 ~120 seconds
 # n = 1.000.000 E[T] = 893 ~ 11 600 seconds
-
