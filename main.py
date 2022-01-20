@@ -102,6 +102,8 @@ print(' \-----------------------------------------------\ ')
 print(f" \ Expected first return time (n={n}): {int(sum(L) / len(L))} moves \ ")
 print(" \-------------- %s seconds ------------------\ " % round((time.time() - start_time), 3))
 
+# RESULTS PART
+# ---------------------------------------
 # n = 100 E[T] = 888 ~ 2 seconds
 # n = 10.000 E[T] = 876 ~120 seconds
 # n = 1.000.000 E[T] = 893 ~ 11 600 seconds
