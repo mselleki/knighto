@@ -1,7 +1,9 @@
 import random
+import time
 
 dict_squares_2 = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h'}
 dict_squares = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}
+start_time = time.time()
 
 
 class Chessboard:
@@ -81,6 +83,7 @@ class Knight:
         print("-----------------------")
         return self
 
+
 n = 10000
 i = 0
 L = []
@@ -90,12 +93,16 @@ while i <= n:
     while True:
         caval.move()
         if caval.transcript() == "a1" and caval.cpt != 0:
-            print("BINGO ! \n The knight just came back home ! ... after...", caval.cpt, "moves...")
             L.append(caval.cpt)
-            print("History : ", caval.history)
-            print(L)
+            # print("History : ", caval.history) random walk of the knighto
+            # print(caval.cpt)
             break
     i += 1
-print('-------------------')
-print("Moyenne : ", sum(L)/len(L))
-print('-------------------')
+print(' \-----------------------------------------------\ ')
+print(f" \ Expected first return time (n={n}): {int(sum(L) / len(L))} moves \ ")
+print(" \-------------- %s seconds ------------------\ " % round((time.time() - start_time), 3))
+
+# n = 100 E[T] = 888 ~ 2 seconds
+# n = 10.000 E[T] = 876 ~120 seconds
+# n = 1.000.000 E[T] = 893 ~ 11 600 seconds
+
