@@ -1,9 +1,15 @@
 import random
 import time
+from cairosvg import svg2png
+import chess.svg
+import chess
+import png2gif
 
 dict_squares_2 = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h'}
 dict_squares = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}
 start_time = time.time()
+chess.COLORS = [True, True]
+chess.COLOR_NAMES = ['white', 'white']
 
 
 class Chessboard:
@@ -84,20 +90,40 @@ class Knight:
         return self
 
 
-n = 10000
+n = 100
 i = 0
+img_num = 0
 L = []
+board_ = chess.Board('8/8/8/8/8/8/8/8 w - - 0 1')
+board_.set_piece_at(square=chess.SQUARE_NAMES.index('a1'), piece=chess.Piece.from_symbol('N'))
+board_svg = chess.svg.board(board_)
+svg2png(bytestring=board_svg,
+        write_to='/home/icrin_3/PycharmProjects/Knighto/board_png/move' + str(img_num) + '.png')
+board_.remove_piece_at(square=chess.SQUARE_NAMES.index('a1'))
+img_num += 1
 while i <= n:
     board = Chessboard()
-    caval = Knight(board, "a1", 0.3)
+    starting_square = "a1"
+    caval = Knight(board, starting_square, 0.3)
+
     while True:
         caval.move()
+        if i == 0:
+            board_.set_piece_at(square=chess.SQUARE_NAMES.index(caval.history[-1]), piece=chess.Piece.from_symbol('N'))
+            board_svg = chess.svg.board(board_)
+            svg2png(bytestring=board_svg,
+                    write_to='/home/icrin_3/PycharmProjects/Knighto/board_png/move' + str(img_num) + '.png')
+            board_.remove_piece_at(square=chess.SQUARE_NAMES.index(caval.history[-1]))
+            img_num += 1
+
         if caval.transcript() == "a1" and caval.cpt != 0:
             L.append(caval.cpt)
             # print("History : ", caval.history) random walk of the knighto
             # print(caval.cpt)
             break
     i += 1
+
+png2gif.pngtogif()  # Create the GIF of the knighto walk
 print(' \-----------------------------------------------\ ')
 print(f" \ Expected first return time (n={n}): {int(sum(L) / len(L))} moves \ ")
 print(" \-------------- %s seconds ------------------\ " % round((time.time() - start_time), 3))
